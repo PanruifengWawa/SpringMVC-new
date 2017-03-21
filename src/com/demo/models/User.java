@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "t_user")
 public class User {
@@ -49,6 +51,7 @@ public class User {
 	
 	@Basic
 	@Temporal(TemporalType.DATE)
+	@DateTimeFormat( pattern = "yyyy-MM-dd" )
     @Column(name = "register_date")
 	public Date getRegisterDate() {
 		return registerDate;

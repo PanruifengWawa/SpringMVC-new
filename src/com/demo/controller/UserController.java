@@ -1,5 +1,10 @@
 package com.demo.controller;
 
+
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -9,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.demo.annotation.CheckUser;
+import com.demo.enums.UserType;
 import com.demo.models.User;
 import com.demo.service.UserService;
 import com.demo.utils.DataWrapper;
@@ -23,51 +30,31 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@RequestMapping(value="test", method = RequestMethod.POST)
+	@RequestMapping(value="testJsonInput", method = RequestMethod.POST)
     @ResponseBody
-    public DataWrapper<User> test(
+    public DataWrapper<User> testJsonInput(
     		@RequestBody User u
     		) {
 		DataWrapper<User> dataWrapper = new DataWrapper<User>();
 		dataWrapper.setData(u);
     	return  dataWrapper;
+		
+    }
+	
+	@CheckUser(type=UserType.Admin)
+	@RequestMapping(value="getUserList", method = RequestMethod.GET)
+    @ResponseBody
+    public DataWrapper<Void> getUserList(
+    		HttpServletRequest request,
+    		HttpServletResponse response,
+    		@RequestParam(value = "token",required = true) String token
+    		) {
+		
+    	return  userService.getUserList(token);
     }
 	
 	
-	/**
-	* @api {post} api/user/login 登录
-	* @apiName user_login
-	* @apiGroup user
-	*
-	* @apiParam {String} userName * 用户名（必须）
-	* @apiParam {String} password * 密码（必须）
-	*
-	* @apiSuccessExample {json} Success-Response:
-	* 	HTTP/1.1 200 ok
-	* 	{
-	*		"callStatus": "SUCCEED",
-	*		"errorCode": "No_Error",
-	*  		"data": null,
-	*  		"token": "SK1d7a4fe3-c2cd-417f-8f6f-bf7412592996",
-	*  		"numberPerPage": 0,
-	*  		"currentPage": 0,
-	*  		"totalNumber": 0,
-	*  		"totalPage": 0
-	*	}
-	*
-	* @apiSuccessExample {json} Error-Response:
-	* 	HTTP/1.1 200 ok
-	* 	{
-	* 		"callStatus": "FAILED",
-	*		"errorCode": "Error",
-	*  		"data": null,
-	*  		"token": null,
-	* 		"numberPerPage": 0,
-	*  		"currentPage": 0,
-	*  		"totalNumber": 0,
-	*  		"totalPage": 0
-	*	}
-	**/
+	
 	@RequestMapping(value="login", method = RequestMethod.POST)
     @ResponseBody
     public DataWrapper<Void> login(
@@ -79,41 +66,6 @@ public class UserController {
     }
 	
 	
-	/**
-	* @api {post} api/user/register 注册
-	* @apiName user_regist
-	* @apiGroup user
-	*
-	* @apiParam {String} userName * 学号（必须）
-	* @apiParam {String} password * 密码（必须）
-	* @apiParam {String} name * 姓名（必须）
-	*
-	* @apiSuccessExample {json} Success-Response:
-	* 	HTTP/1.1 200 ok
-	* 	{
-	*  		"callStatus": "SUCCEED",
-	*  		"errorCode": "No_Error",
-	*  		"data": null,
-	*  		"token": null,
-	*  		"numberPerPage": 0,
-	*  		"currentPage": 0,
-	*  		"totalNumber": 0,
-	*  		"totalPage": 0
-	*	}
-	*
-	* @apiSuccessExample {json} Error-Response:
-	* 	HTTP/1.1 200 ok
-	* 	{
-	*  		"callStatus": "FAILED",
-	*  		"errorCode": "Error",
-	*  		"data": null,
-	*  		"token": null,
-	*  		"numberPerPage": 0,
-	*  		"currentPage": 0,
-	*  		"totalNumber": 0,
-	*  		"totalPage": 0
-	*	}
-	**/
 	@RequestMapping(value="register", method = RequestMethod.POST)
     @ResponseBody
     public DataWrapper<Void> addCareerPlan(

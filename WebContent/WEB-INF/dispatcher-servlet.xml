@@ -3,12 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc
-       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
        <context:component-scan base-package="com.demo"/>
 
@@ -30,8 +33,9 @@
                 				</property>
                 				<property name="supportedMediaTypes">
                     				<list>
-                        				<!-- <value>text/html;charset=UTF-8</value> -->
+                        				
                         				<value>application/json; charset=UTF-8</value>
+                        				<!-- <value>text/html;charset=UTF-8</value> -->
                     				</list>
                 				</property>
                             	<!-- 驼峰转下划线 -->
@@ -42,14 +46,20 @@
                      </list>
               </property>
        </bean>
-         <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
+       
+       <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />
 
        <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
 
+	   <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"> </bean>
+	   <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  </bean>
        <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
               <property name="defaultEncoding" value="UTF-8"/>
               <!-- 指定所上传文件的总大小不能超过5400000KB。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
               <property name="maxUploadSize" value="5400000"/>
        </bean>
+       
+       <!-- 激活自动代理功能 -->  
+       <aop:aspectj-autoproxy proxy-target-class="true"/>  
 
 </beans>

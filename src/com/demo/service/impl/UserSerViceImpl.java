@@ -55,4 +55,12 @@ public class UserSerViceImpl implements UserService {
 		return dataWrapper;
 	}
 
+	@Override
+	public DataWrapper<Void> getUserList(String token) {
+		// TODO Auto-generated method stub
+		DataWrapper<Void> dataWrapper = new DataWrapper<Void>();
+		
+		return dataWrapper;
+	}
+
 }
