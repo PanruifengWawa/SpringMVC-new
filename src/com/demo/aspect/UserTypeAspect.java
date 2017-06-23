@@ -1,8 +1,6 @@
 package com.demo.aspect;
 
-import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
@@ -10,18 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import com.demo.annotation.CheckUser;
-import com.demo.dao.UserDao;
-import com.demo.enums.ErrorCodeEnum;
-import com.demo.enums.UserType;
 import com.demo.models.User;
-import com.demo.utils.DataWrapper;
 import com.demo.utils.SessionManager;
 
 @Aspect

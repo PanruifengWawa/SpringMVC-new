@@ -26,6 +26,17 @@ import com.demo.utils.DataWrapper;
 @RequestMapping(value="/api/user")
 public class UserController {
 	
+
+	@RequestMapping(value="exception", method = RequestMethod.GET)
+    @ResponseBody
+    public DataWrapper<Void> exception(
+    		) {
+		
+		String aString = null;
+		aString.length();
+    	return  null;
+    }
+	
 	
 	@Autowired
 	UserService userService;
@@ -49,6 +60,7 @@ public class UserController {
     		HttpServletResponse response,
     		@RequestParam(value = "token",required = true) String token
     		) {
+		System.out.println(response.getContentType());
 		
     	return  userService.getUserList(token);
     }
@@ -74,7 +86,6 @@ public class UserController {
 		
     	return  userService.register(user);
     }
-	
 	
 
 }

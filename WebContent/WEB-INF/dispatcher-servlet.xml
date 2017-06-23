@@ -35,7 +35,6 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
                     				<list>
                         				
                         				<value>application/json; charset=UTF-8</value>
-                        				<!-- <value>text/html;charset=UTF-8</value> -->
                     				</list>
                 				</property>
                             	<!-- 驼峰转下划线 -->
@@ -61,5 +60,6 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
        
        <!-- 激活自动代理功能 -->  
        <aop:aspectj-autoproxy proxy-target-class="true"/>  
+       <mvc:annotation-driven/>
 
 </beans>
